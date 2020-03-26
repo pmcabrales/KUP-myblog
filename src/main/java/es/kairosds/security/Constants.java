@@ -5,6 +5,7 @@ public class Constants {
 	// Spring Security
 
 	public static final String LOGIN_URL = "/login";
+	public static final String COMMENTS_URL = "/articles/*/comment";
 	public static final String HEADER_AUTHORIZACION_KEY = "Authorization";
 	public static final String TOKEN_BEARER_PREFIX = "Bearer ";
 

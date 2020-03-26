@@ -48,17 +48,17 @@ public class BlogController {
 
 		Entry entry = entryRepository.findById(id).get();
 		
-		if(!swearWordDetectorService.hasSwearWords(comment.getMessage()).getBody()) {
-			List<Comment> comments = entry.getComments();
-			comments.add(comment);
-			entry.setComments(comments);
-			entry = entryRepository.save(entry);
-			return new ResponseEntity<>(entry,HttpStatus.BAD_REQUEST);
-		}else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		try {
+			swearWordDetectorService.hasSwearWords(comment.getMessage());
+		}catch(Exception ex) {
+			return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
 		}
 		
-		
+		List<Comment> comments = entry.getComments();
+		comments.add(comment);
+		entry.setComments(comments);
+		entry = entryRepository.save(entry);
+		return new ResponseEntity<>(entry,HttpStatus.BAD_REQUEST);
 	
 	}
 
