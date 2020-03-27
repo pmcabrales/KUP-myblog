@@ -22,11 +22,37 @@ public class BlogController {
 	@Autowired
 	private SwearWordDetectorService swearWordDetectorService;
 
+	@PostMapping("/{id}/comment")
+	ResponseEntity<Entry> createComment(@PathVariable long id, @RequestBody Comment comment) {
+
+		Entry entry = entryRepository.findById(id).get();
+
+		try {
+			swearWordDetectorService.hasSwearWords(comment.getMessage());
+		} catch (Exception ex) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+
+		List<Comment> comments = entry.getComments();
+		comments.add(comment);
+		entry.setComments(comments);
+		entry = entryRepository.save(entry);
+		return new ResponseEntity<>(entry, HttpStatus.BAD_REQUEST);
+
+	}
+
+	@PostMapping("")
+	Entry createEntry(@RequestBody Entry entry) {
+
+		return entryRepository.save(entry);
+
+	}
+
 	@GetMapping("")
 	List<Entry> getEntries() {
-		
+
 		return entryRepository.findAll();
-		
+
 	}
 
 	@GetMapping("/{id}")
@@ -35,32 +61,5 @@ public class BlogController {
 		return entryRepository.findById(id).get();
 
 	}
-	
-	@PostMapping("")
-	Entry createEntry(@RequestBody Entry entry) {
-
-		return entryRepository.save(entry);
-	
-	}
-	
-	@PostMapping("/{id}/comment")
-	ResponseEntity<Entry> createComment(@PathVariable long id, @RequestBody Comment comment) {
-
-		Entry entry = entryRepository.findById(id).get();
-		
-		try {
-			swearWordDetectorService.hasSwearWords(comment.getMessage());
-		}catch(Exception ex) {
-			return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
-		}
-		
-		List<Comment> comments = entry.getComments();
-		comments.add(comment);
-		entry.setComments(comments);
-		entry = entryRepository.save(entry);
-		return new ResponseEntity<>(entry,HttpStatus.BAD_REQUEST);
-	
-	}
-
 
 }

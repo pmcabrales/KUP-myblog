@@ -1,6 +1,6 @@
 server:
   port: 8443
   ssl: 
-    key-store: classpath:keystore.jks
+    key-store: classpath:test.jks
     key-store-password : password
-    key-password : secret
+    key-password : password

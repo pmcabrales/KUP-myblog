@@ -30,32 +30,27 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
-	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		/*
-		 * 1. Se desactiva el uso de cookies
-		 * 2. Se activa la configuración CORS con los valores por defecto
-		 * 3. Se desactiva el filtro CSRF
-		 * 4. Se indica que el login no requiere autenticación
-		 * 5. Se indica que el resto de URLs esten securizadas
-		 */
-		httpSecurity
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-			.cors().and()
-			.csrf().disable()
-			.authorizeRequests().antMatchers(HttpMethod.POST, Constants.LOGIN_URL).permitAll()
-								.antMatchers(HttpMethod.POST, Constants.COMMENTS_URL).permitAll()
-								.antMatchers("/h2-console/**").permitAll() //To enable h2-console
-			.anyRequest().authenticated().and()
-				.addFilter(new JWTAuthenticationFilter(authenticationManager()))
-				.addFilter(new JWTAuthorizationFilter(authenticationManager()));
-		
-		 httpSecurity.headers().frameOptions().disable(); //To enable h2-console
+	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+		// Se define la clase que recupera los usuarios y el algoritmo para procesar las
+		// passwords
+		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 	}
 
 	@Override
-	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		// Se define la clase que recupera los usuarios y el algoritmo para procesar las passwords
-		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+	protected void configure(HttpSecurity httpSecurity) throws Exception {
+		/*
+		 * 1. Se desactiva el uso de cookies 2. Se activa la configuración CORS con los
+		 * valores por defecto 3. Se desactiva el filtro CSRF 4. Se indica que el login
+		 * no requiere autenticación 5. Se indica que el resto de URLs esten securizadas
+		 */
+		httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().cors().and()
+				.csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, Constants.LOGIN_URL).permitAll()
+				.antMatchers(HttpMethod.POST, Constants.COMMENTS_URL).permitAll().antMatchers("/h2-console/**")
+				.permitAll() // To enable h2-console
+				.anyRequest().authenticated().and().addFilter(new JWTAuthenticationFilter(authenticationManager()))
+				.addFilter(new JWTAuthorizationFilter(authenticationManager()));
+
+		httpSecurity.headers().frameOptions().disable(); // To enable h2-console
 	}
 
 	@Bean

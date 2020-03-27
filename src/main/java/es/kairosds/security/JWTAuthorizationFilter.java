@@ -38,11 +38,8 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 		String token = request.getHeader(Constants.HEADER_AUTHORIZACION_KEY);
 		if (token != null) {
 			// Se procesa el token y se recupera el usuario.
-			String user = Jwts.parser()
-						.setSigningKey(Constants.SUPER_SECRET_KEY)
-						.parseClaimsJws(token.replace(Constants.TOKEN_BEARER_PREFIX, ""))
-						.getBody()
-						.getSubject();
+			String user = Jwts.parser().setSigningKey(Constants.SUPER_SECRET_KEY)
+					.parseClaimsJws(token.replace(Constants.TOKEN_BEARER_PREFIX, "")).getBody().getSubject();
 
 			if (user != null) {
 				return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());

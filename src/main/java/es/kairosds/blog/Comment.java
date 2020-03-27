@@ -7,15 +7,16 @@ import javax.persistence.Id;
 
 @Entity
 public class Comment {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+
 	private String author;
 	private String message;
-	
-	public Comment() {}
+
+	public Comment() {
+	}
 
 	public Comment(String author, String message) {
 		super();
@@ -27,17 +28,16 @@ public class Comment {
 		return author;
 	}
 
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-
 	public String getMessage() {
 		return message;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
-	
+
 }

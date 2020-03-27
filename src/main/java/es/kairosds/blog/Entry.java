@@ -11,21 +11,22 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Entry {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+
 	private String authorName;
 	private String authorNick;
 	private String title;
 	private String summary;
 	private String text;
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Comment> comments;
 
-	public Entry() {}
+	public Entry() {
+	}
 
 	public Entry(String authorName, String authorNick, String title, String summary, String text) {
 		super();
@@ -40,57 +41,52 @@ public class Entry {
 		return authorName;
 	}
 
-	public void setAuthorName(String authorName) {
-		this.authorName = authorName;
-	}
-
 	public String getAuthorNick() {
 		return authorNick;
-	}
-
-	public void setAuthorNick(String authorNick) {
-		this.authorNick = authorNick;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getSummary() {
-		return summary;
-	}
-
-	public void setSummary(String summary) {
-		this.summary = summary;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
 	}
 
 	public List<Comment> getComments() {
 		return comments;
 	}
 
+	public long getId() {
+		return id;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setAuthorName(String authorName) {
+		this.authorName = authorName;
+	}
+
+	public void setAuthorNick(String authorNick) {
+		this.authorNick = authorNick;
+	}
+
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
 
-	public long getId() {
-		return id;
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	};
-	
-	
-	
-	
-	
 
 }

@@ -21,12 +21,6 @@ public class UsuarioController {
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 
-	@PostMapping("/users/")
-	public void saveUsuario(@RequestBody Usuario user) {
-		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		usuarioRepository.save(user);
-	}
-
 	@GetMapping("/users/")
 	public List<Usuario> getAllUsuarios() {
 		return usuarioRepository.findAll();
@@ -35,5 +29,11 @@ public class UsuarioController {
 	@GetMapping("/users/{username}")
 	public Usuario getUsuario(@PathVariable String username) {
 		return usuarioRepository.findByUsername(username);
+	}
+
+	@PostMapping("/users/")
+	public void saveUsuario(@RequestBody Usuario user) {
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		usuarioRepository.save(user);
 	}
 }

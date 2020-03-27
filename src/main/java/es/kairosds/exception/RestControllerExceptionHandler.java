@@ -12,13 +12,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class RestControllerExceptionHandler extends ResponseEntityExceptionHandler {
-	
+
 	@ExceptionHandler(NoSuchElementException.class)
-	protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request){
-		
-		String body =  "Resource not found";
+	protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
+
+		String body = "Resource not found";
 		return handleExceptionInternal(ex, body, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
-		
+
 	}
 
 }
