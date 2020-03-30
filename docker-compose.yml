@@ -1,0 +1,11 @@
+web:
+  build: .
+  ports:
+    - "8443:8443"
+  links:
+    - api
+api:
+  image: pmcabrales/sweardetector:1.0.0
+  ports:
+    - "8543:8543"
+  

@@ -1,9 +1,11 @@
-FROM maven:3-jdk-8-alpine as builder
-COPY * /project/
-WORKDIR /project
-RUN mvn package
+FROM maven as builder
+COPY . /code/
+WORKDIR /code
+RUN mvn -DskipTests=true package
 
 FROM openjdk:8-jre
-COPY --from=builder /project/target/*.jar /usr/app/
-WORKDIR /usr/app
-CMD [ "java", "-jar", "myblog-0.0.1.jar" ]
+RUN apt-get update; apt-get install -y netcat
+COPY --from=builder /code/target/*.jar /app/
+WORKDIR /app
+EXPOSE 8543
+CMD [ "java", "-jar", "myblog-0.0.1-SNAPSHOT.jar" ]

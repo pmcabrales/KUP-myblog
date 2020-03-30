@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BlogController {
 
 	@Autowired
-	private EntryRepository entryRepository;
+	private BlogService blogService;
 
 	@Autowired
 	private SwearWordDetectorService swearWordDetectorService;
@@ -25,40 +25,35 @@ public class BlogController {
 	@PostMapping("/{id}/comment")
 	ResponseEntity<Entry> createComment(@PathVariable long id, @RequestBody Comment comment) {
 
-		Entry entry = entryRepository.findById(id).get();
-
 		try {
 			swearWordDetectorService.hasSwearWords(comment.getMessage());
 		} catch (Exception ex) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 
-		List<Comment> comments = entry.getComments();
-		comments.add(comment);
-		entry.setComments(comments);
-		entry = entryRepository.save(entry);
-		return new ResponseEntity<>(entry, HttpStatus.BAD_REQUEST);
+		Entry entry = blogService.createComment(id, comment);
+		return new ResponseEntity<>(entry, HttpStatus.ACCEPTED);
 
 	}
 
 	@PostMapping("")
 	Entry createEntry(@RequestBody Entry entry) {
 
-		return entryRepository.save(entry);
+		return blogService.saveEntry(entry);
 
 	}
 
 	@GetMapping("")
 	List<Entry> getEntries() {
 
-		return entryRepository.findAll();
+		return blogService.findAllEntries();
 
 	}
 
 	@GetMapping("/{id}")
 	Entry getEntry(@PathVariable long id) {
 
-		return entryRepository.findById(id).get();
+		return blogService.findEntryById(id);
 
 	}
 

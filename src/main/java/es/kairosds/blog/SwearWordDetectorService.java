@@ -4,7 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@FeignClient(value = "swear", url = "http://localhost:8445")
+@FeignClient(value = "swear", url = "http://api:8543")
 public interface SwearWordDetectorService {
 
 	@PostMapping("/swear")
