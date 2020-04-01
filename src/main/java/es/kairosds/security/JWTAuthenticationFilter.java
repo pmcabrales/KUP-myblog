@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import es.kairosds.usuario.Usuario;
+import es.kairosds.user.LoggedUser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -34,10 +34,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
 		try {
-			Usuario credenciales = new ObjectMapper().readValue(request.getInputStream(), Usuario.class);
+			LoggedUser credentials = new ObjectMapper().readValue(request.getInputStream(), LoggedUser.class);
 
 			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-					credenciales.getUsername(), credenciales.getPassword(), new ArrayList<>()));
+					credentials.getUsername(), credentials.getPassword(), new ArrayList<>()));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
