@@ -16,6 +16,9 @@ public class LoggedUser {
 
 	private String password;
 
+	public LoggedUser() {
+	}
+	
 	public long getId() {
 		return id;
 	}

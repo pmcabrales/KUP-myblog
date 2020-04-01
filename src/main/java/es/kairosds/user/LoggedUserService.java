@@ -25,6 +25,7 @@ public class LoggedUserService {
 	}
 
 	public void saveUser(@RequestBody LoggedUser user) {
+		bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		userRepository.save(user);
 	}
