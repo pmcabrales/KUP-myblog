@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class LoggedUser {
+public class BlogUser {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +18,7 @@ public class LoggedUser {
 
 	private String password;
 
-	public LoggedUser() {
+	public BlogUser() {
 	}
 	
 	public long getId() {

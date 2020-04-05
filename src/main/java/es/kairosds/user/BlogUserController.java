@@ -10,23 +10,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class LoggedUserController {
+public class BlogUserController {
 
 	@Autowired
-	private LoggedUserService loggedUserService;
+	private BlogUserService BlogUserService;
 
 	@GetMapping("/users/")
-	public List<LoggedUser> getAllUsers() {
-		return loggedUserService.getAllUsers();
+	public List<BlogUser> getAllUsers() {
+		return BlogUserService.getAllUsers();
 	}
 
 	@GetMapping("/users/{username}")
-	public LoggedUser getUser(@PathVariable String username) {
-		return loggedUserService.getUserByUserName(username);
+	public BlogUser getUser(@PathVariable String username) {
+		return BlogUserService.getUserByUserName(username);
 	}
 
 	@PostMapping("/users/")
-	public void saveUser(@RequestBody LoggedUser user) {
-		loggedUserService.saveUser(user);
+	public void saveUser(@RequestBody BlogUser user) {
+		BlogUserService.saveUser(user);
 	}
 }

@@ -9,22 +9,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
-public class LoggedUserService {
+public class BlogUserService {
 
 	@Autowired
-	private LoggedUserRepository userRepository;
+	private BlogUserRepository userRepository;
 
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	public List<LoggedUser> getAllUsers() {
+	public List<BlogUser> getAllUsers() {
 		return userRepository.findAll();
 	}
 
-	public LoggedUser getUserByUserName(@PathVariable String username) {
+	public BlogUser getUserByUserName(@PathVariable String username) {
 		return userRepository.findByUsername(username);
 	}
 
-	public void saveUser(@RequestBody LoggedUser user) {
+	public void saveUser(@RequestBody BlogUser user) {
 		bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		userRepository.save(user);
