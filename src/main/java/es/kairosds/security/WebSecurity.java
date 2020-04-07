@@ -32,8 +32,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		 */
 		httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().cors().and()
 				.csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, Constants.LOGIN_URL).permitAll()
-				.antMatchers(HttpMethod.POST, Constants.COMMENTS_URL).permitAll().antMatchers("/h2-console/**")
-				.permitAll() // To enable h2-console
+				.antMatchers(HttpMethod.POST, Constants.COMMENTS_URL).permitAll()
+				.antMatchers("/h2-console/**").permitAll() // To enable h2-console
+				.antMatchers("/v2/api-docs/**").permitAll() // To enable swagger2
+				.antMatchers("/swagger-ui.html").permitAll() // To enable swagger2
 				.anyRequest().authenticated().and().addFilter(new JWTAuthenticationFilter(authenticationManager()))
 				.addFilter(new JWTAuthorizationFilter(authenticationManager()));
 

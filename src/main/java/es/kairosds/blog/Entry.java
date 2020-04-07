@@ -9,14 +9,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
+@ApiModel(description = "Entry of the blog")
 public class Entry {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
+	@ApiModelProperty(notes = "Does't show in the Blog")
 	private String authorName;
+	@ApiModelProperty(notes = "Appears in the Blog")
 	private String authorNick;
 	private String title;
 	private String summary;
